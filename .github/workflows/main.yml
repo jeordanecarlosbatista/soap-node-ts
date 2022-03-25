@@ -30,7 +30,7 @@ jobs:
 
       - name: Build artifacts
         run: npm run build
-        
+
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -47,26 +47,26 @@ jobs:
     needs: [build]
     environment:
       name: staging
-      url: https://fashion-delivery.herokuapp.com/api-docs
-    steps:          
-        - name: Download a Build Artifact
-          uses: actions/download-artifact@v2.0.10
-          with:
-            name: artifact
-            path: .
-          
-        - name: Build env file
-          run: |
-           echo "${{env.ENV_STAGING }}" > .env
-           cat .env
-          
-        - name: Build, Push and Release a Docker container to Heroku.
-          uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
-          with:
-            email: ${{ env.HEROKU_EMAIL }}
-            heroku_api_key: ${{ env.HEROKU_API_KEY }}
-            heroku_app_name: ${{ env.HEROKU_APP_NAME }}
-            dockerfile_directory: .
-            dockerfile_name: Dockerfile
-            docker_options: "--no-cache"
-            process_type: web
+      url: https://gerenciador-java.herokuapp.com/
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.10
+        with:
+          name: artifact
+          path: .
+
+      - name: Build env file
+        run: |
+          echo "${{env.ENV_STAGING }}" > .env
+          cat .env
+
+      - name: Build, Push and Release a Docker container to Heroku.
+        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+        with:
+          email: ${{ env.HEROKU_EMAIL }}
+          heroku_api_key: ${{ env.HEROKU_API_KEY }}
+          heroku_app_name: ${{ env.HEROKU_APP_NAME }}
+          dockerfile_directory: .
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
