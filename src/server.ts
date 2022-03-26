@@ -23,6 +23,10 @@ const myService = {
     }
 }
 
+app.use("/", (req: any, res: any) => {
+    res.send({ message: "Hello World" });
+})
+
 app.listen(port, () => {
     const xml = fs.readFileSync(path.join(__dirname, '../book.wsdl'), 'utf8');
     soap.listen(app, '/wsdl', myService, xml, function () {
